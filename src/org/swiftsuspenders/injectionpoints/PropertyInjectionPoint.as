@@ -55,8 +55,11 @@ package org.swiftsuspenders.injectionpoints
 		{
 			propertyType = node.parent().@type.toString();
 			propertyName = node.parent().@name.toString();
-			m_injectionConfig = injector.getMapping(Class(injector.getApplicationDomain().getDefinition(propertyType)), 
-				node.arg.attribute('value').toString());
+
+			var namedValue:String = node.arg.attribute('value');
+
+			m_injectionConfig = injector.getMapped(propertyType, namedValue) ||
+								injector.getMapping(Class(injector.getApplicationDomain().getDefinition(propertyType)), namedValue);
 		}
 	}
 }
